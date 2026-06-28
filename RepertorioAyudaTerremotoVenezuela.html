@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayuda Venezuela — Terremoto 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --rojo: #D62828; --amarillo: #F7B731; --azul: #1B4FBF;
+    --negro: #0D0D0D; --blanco: #FFFFFF; --gris-claro: #F5F5F5;
+    --gris-texto: #444; --card-border: #E0E0E0;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--blanco); color: var(--negro); min-height: 100vh; -webkit-text-size-adjust: 100%; }
+
+  header { background: var(--negro); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--rojo); }
+  .header-inner { max-width: 900px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .header-flag { display: flex; gap: 4px; align-items: center; }
+  .flag-bar { width: 6px; height: 24px; border-radius: 2px; }
+  .header-title { color: var(--blanco); font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em; }
+  .header-title span { color: var(--amarillo); }
+  .live-badge { background: var(--rojo); color: var(--blanco); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+  .live-dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .hero { background: var(--negro); color: var(--blanco); padding: 36px 16px 30px; text-align: center; }
+  .hero-eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amarillo); margin-bottom: 10px; }
+  .hero h1 { font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 12px; }
+  .hero h1 em { font-style: normal; color: var(--rojo); }
+  .hero p { font-size: 0.95rem; color: #ccc; max-width: 540px; margin: 0 auto; line-height: 1.5; }
+
+  .stats-bar { background: var(--rojo); padding: 12px 16px; }
+  .stats-inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: center; flex-wrap: wrap; gap: 14px 24px; }
+  .stat { color: var(--blanco); text-align: center; flex: 1 1 140px; }
+  .stat-num { font-size: 1.3rem; font-weight: 900; letter-spacing: -0.02em; display: block; }
+  .stat-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.85; }
+
+  .nav-tabs { background: var(--gris-claro); border-bottom: 2px solid var(--card-border); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tabs-inner { max-width: 900px; margin: 0 auto; display: flex; padding: 0 16px; gap: 4px; }
+  .nav-tab { padding: 12px 12px; font-size: 0.75rem; font-weight: 600; color: var(--gris-texto); text-decoration: none; white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .nav-tab:hover, .nav-tab:active { color: var(--rojo); border-bottom-color: var(--rojo); }
+
+  main { max-width: 900px; margin: 0 auto; padding: 0 16px 40px; }
+
+  .section { margin-top: 36px; scroll-margin-top: 60px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--negro); }
+  .section-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .section-title { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
+  .section-desc { font-size: 0.78rem; color: var(--gris-texto); margin-top: 2px; font-weight: 400; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 12px; }
+  .card { border: 1.5px solid var(--card-border); border-radius: 10px; padding: 16px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s, box-shadow 0.15s; background: #fff; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--card-accent, var(--azul)); border-radius: 10px 0 0 10px; }
+  .card:hover, .card:active { border-color: var(--card-accent, var(--azul)); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+  .card-name { font-size: 0.95rem; font-weight: 700; color: var(--negro); }
+  .card-url { font-size: 0.72rem; color: var(--gris-texto); font-family: monospace; word-break: break-all; }
+  .card-desc { font-size: 0.82rem; color: var(--gris-texto); line-height: 1.45; }
+  .card-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px; background: var(--card-accent, var(--azul)); color: #fff; align-self: flex-start; margin-top: 4px; }
+
+  .acc-red   { --card-accent: #D62828; }
+  .acc-blue  { --card-accent: #1B4FBF; }
+  .acc-amber { --card-accent: #C9850A; }
+  .acc-green { --card-accent: #1A7F4B; }
+  .acc-purple{ --card-accent: #6B3FA0; }
+  .acc-pink  { --card-accent: #C0335A; }
+  .acc-teal  { --card-accent: #0E7C7B; }
+
+  .emergency-box { background: var(--rojo); color: var(--blanco); border-radius: 12px; padding: 16px; display: flex; align-items: flex-start; gap: 14px; margin-top: 36px; }
+  .emergency-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .emergency-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
+  .emergency-nums { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 10px; width: 100%; }
+  .enum { background: rgba(255,255,255,0.15); padding: 8px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em; text-align: center; }
+  .enum small { display: block; font-size: 0.6rem; font-weight: 400; opacity: 0.9; letter-spacing: 0; margin-top: 2px; line-height: 1.2; }
+
+  .operadoras-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .op-card { border: 1.5px solid var(--card-border); border-radius: 10px; padding: 12px 14px; background: #fff; }
+  .op-name { font-size: 0.85rem; font-weight: 700; color: var(--negro); margin-bottom: 4px; }
+  .op-desc { font-size: 0.78rem; color: var(--gris-texto); line-height: 1.4; }
+  .op-badge { display: inline-block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 7px; border-radius: 20px; background: #1A7F4B; color: #fff; margin-top: 6px; }
+
+  .sangre-box { background: #FFF0F0; border: 2px solid var(--rojo); border-radius: 12px; padding: 16px; margin-top: 16px; }
+  .sangre-title { font-size: 0.95rem; font-weight: 800; color: var(--rojo); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .hospitales-sangre { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; margin-top: 10px; }
+  .hosp { background: #fff; border: 1.5px solid #f0c0c0; border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; line-height: 1.4; }
+  .hosp strong { display: block; font-size: 0.82rem; color: var(--negro); margin-bottom: 2px; }
+  .sangre-req { margin-top: 12px; font-size: 0.78rem; color: #444; line-height: 1.5; background: #fff; border-radius: 8px; padding: 12px; border: 1px solid #f0c0c0; }
+
+  .alerta { background: #FFF8E1; border: 1.5px solid var(--amarillo); border-radius: 10px; padding: 12px 14px; font-size: 0.78rem; color: #5a4000; line-height: 1.5; margin-top: 12px; display: flex; gap: 10px; align-items: flex-start; }
+
+  .acopio-list { display: flex; flex-direction: column; gap: 8px; }
+  .acopio-item { border: 1.5px solid var(--card-border); border-radius: 8px; padding: 12px; background: #fff; border-left: 4px solid #C9850A; }
+  .acopio-org { font-size: 0.75rem; font-weight: 700; color: #C9850A; text-transform: uppercase; letter-spacing: 0.04em; }
+  .acopio-lugar { font-size: 0.88rem; font-weight: 600; color: var(--negro); margin-top: 2px; }
+  .acopio-dir { font-size: 0.78rem; color: var(--gris-texto); margin-top: 3px; line-height: 1.3; }
+  .acopio-items { font-size: 0.75rem; color: #555; margin-top: 4px; font-style: italic; }
+
+  .donar-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .donar-col { border-radius: 10px; padding: 14px; }
+  .donar-col.si { background: #F0FFF4; border: 1.5px solid #A8D5BA; }
+  .donar-col.no { background: #FFF5F5; border: 1.5px solid #F5BABA; }
+  .donar-col-title { font-size: 0.82rem; font-weight: 800; margin-bottom: 8px; }
+  .donar-col.si .donar-col-title { color: #1A7F4B; }
+  .donar-col.no .donar-col-title { color: var(--rojo); }
+  .donar-col ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .donar-col ul li { font-size: 0.78rem; color: #444; padding-left: 16px; position: relative; line-height: 1.3; }
+  .donar-col ul li::before { content: '✓'; position: absolute; left: 0; font-weight: 700; color: #1A7F4B; }
+  .donar-col.no ul li::before { content: '✗'; color: var(--rojo); }
+
+  footer { background: var(--negro); color: #888; text-align: center; padding: 24px 16px; font-size: 0.75rem; line-height: 1.6; margin-top: 48px; }
+  footer a { color: var(--amarillo); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .card-grid, .hospitales-sangre, .operadoras-grid, .donar-cols { grid-template-columns: 1fr; }
+    .emergency-box { flex-direction: column; gap: 10px; }
+    .emergency-nums { grid-template-columns: 1fr; }
+    .stat { flex: 1 1 40%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="header-flag">
+        <div class="flag-bar" style="background:#D62828;"></div>
+        <div class="flag-bar" style="background:#F7B731;"></div>
+        <div class="flag-bar" style="background:#1B4FBF;"></div>
+      </div>
+      <div class="header-title">Ayuda <span>Venezuela</span></div>
+    </div>
+    <div class="live-badge"><div class="live-dot"></div>Actualizado 28 jun</div>
+  </div>
+</header>
+
+<section class="hero">
+  <p class="hero-eyebrow">Terremoto · 24 de junio de 2026</p>
+  <h1>Venezuela <em>necesita</em><br>tu ayuda ahora</h1>
+  <p>Recursos verificados: busca familiares, reporta desaparecidos, dona sangre, encuentra centros de acopio y cómo ayudar desde donde estés.</p>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num">+1.450</span><span class="stat-label">Fallecidos</span></div>
+    <div class="stat"><span class="stat-num">+3.150</span><span class="stat-label">Heridos</span></div>
+    <div class="stat"><span class="stat-num">+50.000</span><span class="stat-label">Desaparecidos</span></div>
+    <div class="stat"><span class="stat-num">774</span><span class="stat-label">Edificios afectados</span></div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <a class="nav-tab" href="#emergencia">🚨 Emergencia</a>
+    <a class="nav-tab" href="#desaparecidos">🔍 Buscar personas</a>
+    <a class="nav-tab" href="#hospitales">🏥 Hospitales</a>
+    <a class="nav-tab" href="#mapas-acopio">🗺️ Mapas de acopio</a>
+    <a class="nav-tab" href="#sangre">🩸 Donar sangre</a>
+    <a class="nav-tab" href="#acopio">📦 Centros de acopio</a>
+    <a class="nav-tab" href="#voluntarios">🤝 Voluntarios</a>
+    <a class="nav-tab" href="#conectividad">📡 Conectividad</a>
+  </div>
+</div>
+
+<main>
+
+  <!-- EMERGENCIA -->
+  <div id="emergencia" class="emergency-box">
+    <div class="emergency-icon">🚨</div>
+    <div style="width: 100%;">
+      <div class="emergency-title">Números de emergencia en Venezuela</div>
+      <div style="font-size:0.78rem;opacity:0.9;margin-bottom:8px;">Llama solo si es urgente — no satures las líneas</div>
+      <div class="emergency-nums">
+        <div class="enum">911<small>Emergencias</small></div>
+        <div class="enum">112<small>Protección Civil</small></div>
+        <div class="enum">171<small>Bomberos</small></div>
+        <div class="enum">*1<small>Atajo celular</small></div>
+        <div class="enum">0800-386-8474<small>FUNVISIS · Sismos</small></div>
+        <div class="enum" style="background:rgba(255,255,255,0.25);border:2px solid rgba(255,255,255,0.4);">0800-RESCATE<small>(0800-7372283) · Reportar desaparecidos</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUSCAR PERSONAS -->
+  <div id="desaparecidos" class="section">
+    <div class="section-header">
+      <div class="section-icon">🔍</div>
+      <div>
+        <div class="section-title">Buscar y reportar personas</div>
+        <div class="section-desc">Revisa todas — cada plataforma tiene registros distintos</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <a href="https://venezuelareporta.org" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">Venezuela Reporta</div>
+        <div class="card-url">venezuelareporta.org</div>
+        <div class="card-desc">+11.500 personas ubicadas en hospitales y refugios. Busca por nombre. Se actualiza cada 2 minutos.</div>
+        <div class="card-tag">Principal · Más completo</div>
+      </a>
+      <a href="https://desaparecidosterremotovenezuela.com" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">Desaparecidos Terremoto VZ</div>
+        <div class="card-url">desaparecidosterremotovenezuela.com</div>
+        <div class="card-desc">+56.000 personas reportadas. Creada por Mariangelli Álvarez desde Miami. Busca por nombre, cédula o foto.</div>
+        <div class="card-tag">Mayor base de datos</div>
+      </a>
+      <a href="https://venezuelatebusca.com" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">Venezuela Te Busca</div>
+        <div class="card-url">venezuelatebusca.com</div>
+        <div class="card-desc">+26.000 registros. Filtra por nombre, edad o ubicación. Actualiza el caso cuando tengas noticias.</div>
+        <div class="card-tag">Desaparecidos</div>
+      </a>
+      <a href="https://encuentralos.tecnosoft.dev" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">Encuéntralos</div>
+        <div class="card-url">encuentralos.tecnosoft.dev</div>
+        <div class="card-desc">Reporta y localiza personas. Mapa interactivo de La Guaira, SOS urgentes y edificios afectados.</div>
+        <div class="card-tag">Mapa + personas</div>
+      </a>
+      <a href="https://civis.com.ve" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">CIVIS Venezuela</div>
+        <div class="card-url">civis.com.ve</div>
+        <div class="card-desc">Búsqueda con IA y reconocimiento facial. Atiende también por WhatsApp. Incluye mapa de riesgo y réplicas.</div>
+        <div class="card-tag">IA + WhatsApp</div>
+      </a>
+      <a href="https://pacientesterremotovzla.lovable.app" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">Listas de Hospitales VZ</div>
+        <div class="card-url">pacientesterremotovzla.lovable.app</div>
+        <div class="card-desc">Publica listas ciudadanas de pacientes atendidos en centros de salud. Si trabajas en un hospital puedes enviar tu lista.</div>
+        <div class="card-tag">Pacientes hospitalizados</div>
+      </a>
+      <a href="https://www.puntodeapoyovenezuela.com" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">Punto de Apoyo Venezuela</div>
+        <div class="card-url">puntodeapoyovenezuela.com</div>
+        <div class="card-desc">Mapa colaborativo en tiempo real. Busca por nombre o cédula. Reporta si ofreces o necesitas ayuda. Sin registro.</div>
+        <div class="card-tag">Mapa en tiempo real</div>
+      </a>
+      <a href="https://todosconvenezuela.com/buscar" target="_blank" rel="noopener" class="card acc-red">
+        <div class="card-name">Todos Con Venezuela — Buscador</div>
+        <div class="card-url">todosconvenezuela.com/buscar</div>
+        <div class="card-desc">Buscador general que reúne varias plataformas en un solo lugar: personas, centros de acopio y reportes verificados.</div>
+        <div class="card-tag">Buscador general</div>
+      </a>
+    </div>
+    <div class="alerta">
+      ⚠️ <span><strong>Menor no acompañado:</strong> llama al 112 de inmediato. No te lo lleves aunque sea con buena intención. Repórtalo a Protección Civil y a las plataformas de arriba.</span>
+    </div>
+    <div class="alerta" style="margin-top:8px;">
+      📱 <span><strong>VenApp</strong> (app del gobierno venezolano) fue adaptada para reportar desaparecidos, pedir auxilio y notificar daños en viviendas durante la emergencia.</span>
+    </div>
+  </div>
+
+  <!-- HOSPITALES -->
+  <div id="hospitales" class="section">
+    <div class="section-header">
+      <div class="section-icon">🏥</div>
+      <div>
+        <div class="section-title">Información de hospitales</div>
+        <div class="section-desc">Para saber si un familiar fue ingresado en algún centro de salud</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <a href="https://venezuelareporta.org" target="_blank" rel="noopener" class="card acc-blue">
+        <div class="card-name">Buscar pacientes hospitalizados</div>
+        <div class="card-url">venezuelareporta.org</div>
+        <div class="card-desc">Lista consolidada de personas ingresadas en hospitales y clínicas. Busca por nombre o cédula. Actualización diaria.</div>
+        <div class="card-tag">Más completo</div>
+      </a>
+      <a href="https://pacientesterremotovzla.lovable.app" target="_blank" rel="noopener" class="card acc-blue">
+        <div class="card-name">Listas ciudadanas de hospitales</div>
+        <div class="card-url">pacientesterremotovzla.lovable.app</div>
+        <div class="card-desc">Listas enviadas por voluntarios y personal médico. Si tienes una foto del tablón de un hospital, puedes enviarla aquí.</div>
+        <div class="card-tag">Ciudadano</div>
+      </a>
+      <a href="https://www.redsolidariavenezuela.com" target="_blank" rel="noopener" class="card acc-blue">
+        <div class="card-name">Red Solidaria Venezuela</div>
+        <div class="card-url">redsolidariavenezuela.com</div>
+        <div class="card-desc">Busca pacientes, localiza bancos de sangre activos por estado, y accede a apoyo psicológico gratuito por WhatsApp.</div>
+        <div class="card-tag">Sangre + pacientes</div>
+      </a>
+      <a href="https://directorio-sismo.netlify.app" target="_blank" rel="noopener" class="card acc-blue">
+        <div class="card-name">Atención médica online</div>
+        <div class="card-url">directorio-sismo.netlify.app</div>
+        <div class="card-desc">Consulta médica gratuita a distancia con profesionales de la salud voluntarios. También apoyo psicológico.</div>
+        <div class="card-tag">Telemedicina</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MAPAS DE ACOPIO (NUEVA UBICACIÓN) -->
+  <div id="mapas-acopio" class="section">
+    <div class="section-header">
+      <div class="section-icon">🗺️</div>
+      <div>
+        <div class="section-title">Mapas de acopio actualizados en tiempo real</div>
+        <div class="section-desc">Monitorea los puntos de recolección y zonas de afectación en vivo</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <a href="https://centrosayudavenezuela.org" target="_blank" rel="noopener" class="card acc-amber">
+        <div class="card-name">Centros Ayuda Venezuela</div>
+        <div class="card-url">centrosayudavenezuela.org</div>
+        <div class="card-desc">Directorio buscable con direcciones exactas, qué aceptan y estado de verificación.</div>
+        <div class="card-tag">Directorio completo</div>
+      </a>
+      <a href="https://terremotovenezuela.com" target="_blank" rel="noopener" class="card acc-amber">
+        <div class="card-name">TerremotoVenezuela.com</div>
+        <div class="card-url">terremotovenezuela.com</div>
+        <div class="card-desc">Mapa colaborativo de daños, centros de acopio y refugios. Réplicas sísmicas en tiempo real desde USGS.</div>
+        <div class="card-tag">Mapa + réplicas</div>
+      </a>
+      <a href="https://encuentralos.tecnosoft.dev" target="_blank" rel="noopener" class="card acc-amber">
+        <div class="card-name">Encuéntralos — Acopio</div>
+        <div class="card-url">encuentralos.tecnosoft.dev</div>
+        <div class="card-desc">Coordina centros para no duplicar esfuerzos. Rutas logísticas a Caracas y La Guaira vía Transuaminca.</div>
+        <div class="card-tag">Coordinación logística</div>
+      </a>
+      <a href="https://www.puntodeapoyovenezuela.com" target="_blank" rel="noopener" class="card acc-amber">
+        <div class="card-name">Punto de Apoyo Venezuela</div>
+        <div class="card-url">puntodeapoyovenezuela.com</div>
+        <div class="card-desc">Mapa ciudadano con pines de acopio (azul) y hospitales con heridos (rojo). Reporta un punto nuevo sin registro.</div>
+        <div class="card-tag">Mapa ciudadano</div>
+      </a>
+      <a href="https://refugiosvenezuela.com" target="_blank" rel="noopener" class="card acc-amber">
+        <div class="card-name">Refugios Venezuela</div>
+        <div class="card-url">refugiosvenezuela.com</div>
+        <div class="card-desc">Mapa colaborativo de refugios, centros de comida y acopio, con cupo disponible en tiempo real. Verificada y funcional.</div>
+        <div class="card-tag">Verificada · Funcional</div>
+      </a>
+      <a href="https://refugios.online" target="_blank" rel="noopener" class="card acc-amber">
+        <div class="card-name">Refugios Online</div>
+        <div class="card-url">refugios.online</div>
+        <div class="card-desc">Plataforma de refugios y distribución de insumos. Es nueva y aún puede estar en construcción — confirma la info por otra vía si algo no carga.</div>
+        <div class="card-tag">⚠️ Nueva · En construcción</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- DONAR SANGRE -->
+  <div id="sangre" class="section">
+    <div class="section-header">
+      <div class="section-icon">🩸</div>
+      <div>
+        <div class="section-title">Donar sangre — Se necesita urgente</div>
+        <div class="section-desc">Los hospitales necesitan todos los grupos sanguíneos. Sin cita previa — lleva tu cédula</div>
+      </div>
+    </div>
+    <div class="sangre-box">
+      <div class="sangre-title">🏥 Bancos de sangre activos en Caracas</div>
+      <div style="font-size:0.78rem;color:#555;margin-bottom:10px;">Horario: 7:00 AM – 4:00 PM</div>
+      <div class="hospitales-sangre">
+        <div class="hosp"><strong>Hospital Dr. Domingo Luciani</strong>Urb. El Llanito, Municipio Sucre</div>
+        <div class="hosp"><strong>Hemocentro Chacao</strong>Frente al antiguo Mercado Municipal, Chacao</div>
+        <div class="hosp"><strong>Hospital Universitario de Caracas (HUC)</strong>Ciudad Universitaria</div>
+        <div class="hosp"><strong>Banco Municipal de Sangre</strong>Caracas</div>
+        <div class="hosp"><strong>Hospital Dr. José Gregorio Hernández</strong>Los Magallanes de Catia</div>
+        <div class="hosp"><strong>Hospital Pérez de León II</strong>Petare, Caracas</div>
+        <div class="hosp"><strong>Hospital Victorino Santaella</strong>Los Teques, Miranda</div>
+        <div class="hosp"><strong>Hospital Cardiológico Infantil Dr. Gilberto Rodríguez Ochoa</strong>Caracas</div>
+      </div>
+      <div class="sangre-req">
+        <strong>Requisitos para donar:</strong> Mayor de 18 años · Peso mínimo 50 kg · Sin gripe ni antibióticos · Sin hepatitis después de los 10 años · Sin alcohol en las últimas 24h · Tatuajes con más de 1 año de cicatrización · Llevar cédula de identidad
+      </div>
+    </div>
+    <div class="alerta" style="margin-top:12px;">
+      🩸 <span>Si estás en otro estado, consulta <strong>redsolidariavenezuela.com</strong> para encontrar bancos de sangre activos fuera de Caracas. La información se actualiza por estado.</span>
+    </div>
+  </div>
+
+  <!-- CENTROS DE ACOPIO -->
+  <div id="acopio" class="section">
+    <div class="section-header">
+      <div class="section-icon">📦</div>
+      <div>
+        <div class="section-title">Centros de acopio y refugios</div>
+        <div class="section-desc">Confirma horarios antes de ir — las necesidades cambian rápido.</div>
+      </div>
+    </div>
+
+    <div style="font-size:0.85rem;font-weight:700;color:var(--negro);margin-bottom:4px;">🏠 Refugios temporales habilitados — Estado La Guaira</div>
+    <div style="font-size:0.78rem;color:var(--gris-texto);margin-bottom:12px;line-height:1.4;">Importante: un <strong>refugio</strong> alberga damnificados; no se reciben donaciones del público en estos puntos generales. Lista oficial de la Vicepresidencia Social.</div>
+    <div class="acopio-list">
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">⭐ Prioritario · Abuelos sin amparo familiar</div>
+        <div class="acopio-lugar">UENB Santa Eduvigis</div>
+        <div class="acopio-dir">Bloques Unidos 1 y 2, Sector Aeropuerto, parroquia Urimare</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">⭐ Prioritario · Niños sin amparo familiar</div>
+        <div class="acopio-lugar">Edificio PDVAL</div>
+        <div class="acopio-dir">Urb. Armando Reverón, sector Guaracarumbo</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">Centro de Adiestramiento Naval — Escuela de Grumetes</div>
+        <div class="acopio-dir">Av. La Páez, Catia La Mar</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">Liceo Armando Reverón</div>
+        <div class="acopio-dir">Urb. Guaracarumbo, parroquia Raúl Leoni</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">Liceo Nacional Lorenzo González</div>
+        <div class="acopio-dir">Distribuidor El Trébol, sector Simetaca, parroquia Carlos Soublette</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">UENB 10 de Marzo</div>
+        <div class="acopio-dir">Prolongación 10 de Marzo, bloque 1, parroquia Carlos Soublette</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">Universidad Marítima del Caribe</div>
+        <div class="acopio-dir">Av. El Ejército, Catia La Mar</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">UEN Juan Germán Roscio</div>
+        <div class="acopio-dir">Navarrete a Buena Vista, parroquia Maiquetía</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">Complejo Educativo República de Panamá</div>
+        <div class="acopio-dir">Avenida Soublette, parroquia La Guaira</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">UEE La Guaira</div>
+        <div class="acopio-dir">Pachano a San Juan de Dios, parroquia La Guaira</div>
+      </div>
+      <div class="acopio-item" style="border-left-color:#0E7C7B;">
+        <div class="acopio-org" style="color:#0E7C7B;">La Guaira</div>
+        <div class="acopio-lugar">CEIS Manuelita Sáenz</div>
+        <div class="acopio-dir">Sector Marapa Marina, Catia La Mar</div>
+      </div>
+    </div>
+
+    <div style="font-size:0.85rem;font-weight:700;color:var(--negro);margin:24px 0 4px;">📍 Puntos de recepción por estado</div>
+    <div style="font-size:0.78rem;color:var(--gris-texto);margin-bottom:12px;">La Guaira → Miranda → Caracas (Distrito Capital) → resto del país</div>
+
+    <div style="font-size:0.72rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.05em;margin:14px 0 6px;">La Guaira</div>
+    <div class="acopio-list">
+      <div class="acopio-item">
+        <div class="acopio-org">La Guaira</div>
+        <div class="acopio-lugar">Punto de acopio DIP-PNB</div>
+        <div class="acopio-dir">Av. Principal de Playa Grande, La Guaira (Oficina de la DIP-PNB)</div>
+        <div class="acopio-items">Agua, alimentos, higiene, pañales, insumos médicos, lencería, comida para mascotas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">La Guaira</div>
+        <div class="acopio-lugar">Polideportivo José María Vargas</div>
+        <div class="acopio-dir">La Guaira — centro logístico principal de distribución de donaciones</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">La Guaira</div>
+        <div class="acopio-lugar">Terminal de Oriente</div>
+        <div class="acopio-dir">La Guaira</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">La Guaira</div>
+        <div class="acopio-lugar">Estaciones de Bomberos y sedes de Protección Civil regionales</div>
+        <div class="acopio-dir">Litoral de La Guaira</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">La Guaira</div>
+        <div class="acopio-lugar">Puntos de Coordinación de Emergencia</div>
+        <div class="acopio-dir">La Guaira</div>
+      </div>
+    </div>
+
+    <div style="font-size:0.72rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.05em;margin:18px 0 6px;">Miranda</div>
+    <div class="acopio-list">
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao · Altamira</div>
+        <div class="acopio-lugar">Comando ConVzla — Altamira (Quinta El Bejucal)</div>
+        <div class="acopio-dir">4ta Av. de Altamira, entre 9na y 10ma transversal</div>
+        <div class="acopio-items">Agua, alimentos, ropa, insumos médicos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Sucre</div>
+        <div class="acopio-lugar">Base Aérea La Carlota</div>
+        <div class="acopio-dir">Carpa habilitada como centro de acopio</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao</div>
+        <div class="acopio-lugar">Esfera de Soto</div>
+        <div class="acopio-dir">Altamira, Chacao</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Baruta</div>
+        <div class="acopio-lugar">PDVSA La Campiña</div>
+        <div class="acopio-dir">La Campiña</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Sucre</div>
+        <div class="acopio-lugar">Parque Generalísimo Francisco de Miranda</div>
+        <div class="acopio-dir">Parque del Este</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao · El Recreo</div>
+        <div class="acopio-lugar">Centro Comercial El Recreo</div>
+        <div class="acopio-dir">El Recreo, Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao · El Recreo</div>
+        <div class="acopio-lugar">Gimnasio Energym</div>
+        <div class="acopio-dir">Av. Casanova, El Recreo</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao · El Recreo</div>
+        <div class="acopio-lugar">Torre Movilnet</div>
+        <div class="op-desc">El Recreo, Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao</div>
+        <div class="acopio-lugar">Sede de Desarrollo Social</div>
+        <div class="acopio-dir">Calle Los Ángeles, lateral al C.C. Sambil Chacao</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao</div>
+        <div class="acopio-lugar">Centros comerciales habilitados</div>
+        <div class="acopio-dir">C.C. Sambil Chacao, C.C. Líder y C.C. Millennium Mall</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao · Bello Campo</div>
+        <div class="acopio-lugar">Parroquia El Buen Pastor</div>
+        <div class="acopio-dir">Urb. Bello Campo</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao · Los Palos Grandes</div>
+        <div class="acopio-lugar">Plaza Los Palos Grandes</div>
+        <div class="acopio-dir">Habilitada por las autoridades para recepción de insumos básicos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao · Altamira</div>
+        <div class="acopio-lugar">Plaza Francia de Altamira</div>
+        <div class="acopio-dir">Punto principal de acopio y organización vecinal del municipio Chacao</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Chacao</div>
+        <div class="acopio-lugar">Colegio IEEE Francisco de Miranda</div>
+        <div class="acopio-dir">Chacao</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Baruta · Las Mercedes</div>
+        <div class="acopio-lugar">Plaza Alfredo Sadel</div>
+        <div class="acopio-dir">Las Mercedes — sede del Programa de Paz y Convivencia</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Baruta · Las Mercedes</div>
+        <div class="acopio-lugar">Colegio Mater Salvatoris</div>
+        <div class="acopio-dir">Las Mercedes, Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Baruta · Las Mercedes</div>
+        <div class="acopio-lugar">Trasnocho Cultural</div>
+        <div class="acopio-dir">Las Mercedes — junto a Fundación Velutini y Century 21</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Baruta · Bello Monte</div>
+        <div class="acopio-lugar">Ciudad Banesco</div>
+        <div class="acopio-dir">Bello Monte</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">El Hatillo / El Cafetal</div>
+        <div class="acopio-lugar">Sede de Protección Civil</div>
+        <div class="acopio-dir">Av. Principal de La Guairita, al lado de los Bomberos de El Cafetal</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Sucre · Petare</div>
+        <div class="acopio-lugar">Coliseo de Petare</div>
+        <div class="acopio-dir">Petare</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Sucre · La Floresta</div>
+        <div class="acopio-lugar">Unexca</div>
+        <div class="acopio-dir">Núcleo La Floresta</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Miranda</div>
+        <div class="acopio-lugar">Sedes de Central Madeirense</div>
+        <div class="acopio-dir">Varias sedes en el área metropolitana</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Los Salias</div>
+        <div class="acopio-lugar">Complejo Cultural Los Salias</div>
+        <div class="acopio-dir">San Antonio de los Altos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Los Salias</div>
+        <div class="acopio-lugar">Bulevar de Las Minas</div>
+        <div class="acopio-dir">Frente al Farmatodo de San Antonio de los Altos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Guaicaipuro · Los Teques</div>
+        <div class="acopio-lugar">La Alcabala</div>
+        <div class="acopio-dir">Sector Lagunita, Los Teques</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Guaicaipuro · Los Teques</div>
+        <div class="acopio-lugar">Escuela Estatal Miranda</div>
+        <div class="acopio-dir">Sector Cuatro Esquinas, Los Teques</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Guaicaipuro · Los Teques</div>
+        <div class="acopio-lugar">Auditorio del Hospital Victorino Santaella</div>
+        <div class="acopio-dir">Sector El Tambor, Los Teques</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Guaicaipuro · Los Teques</div>
+        <div class="acopio-lugar">Farmatodo</div>
+        <div class="acopio-dir">Sector La Matica, Los Teques</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Guaicaipuro · Los Teques</div>
+        <div class="acopio-lugar">Estación de Metro Independencia</div>
+        <div class="acopio-dir">Los Teques</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Guaicaipuro · Los Teques</div>
+        <div class="acopio-lugar">Av. Bermúdez</div>
+        <div class="acopio-dir">Frente al Canguro, Los Teques</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Guaicaipuro · Los Teques</div>
+        <div class="acopio-lugar">Panadería La Modelo</div>
+        <div class="acopio-dir">Los Teques</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Urdaneta · Cúa</div>
+        <div class="acopio-lugar">Centro Comercial El Colonial</div>
+        <div class="acopio-dir">Cúa</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Cristóbal Rojas · Charallave</div>
+        <div class="acopio-lugar">Centro Parroquial Pastoral Social</div>
+        <div class="acopio-dir">Av. Tosta García, Charallave</div>
+      </div>
+    </div>
+
+    <div style="font-size:0.72rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.05em;margin:18px 0 6px;">Caracas (Distrito Capital)</div>
+    <div class="acopio-list">
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Centro</div>
+        <div class="acopio-lugar">Casa de Gobierno de Caracas</div>
+        <div class="acopio-dir">Frente a la Plaza Bolívar</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Centro</div>
+        <div class="acopio-lugar">Banco Central de Venezuela (BCV)</div>
+        <div class="acopio-dir">Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Centro</div>
+        <div class="acopio-lugar">Tribunal Supremo de Justicia — Sede principal</div>
+        <div class="acopio-dir">Final Av. Baralt, esquina Dos Pilitas (Foro Libertador), al oeste del Panteón Nacional</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Centro</div>
+        <div class="acopio-lugar">Ministerio para Relaciones Interiores, Justicia y Paz</div>
+        <div class="acopio-dir">Av. Urdaneta, Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Centro</div>
+        <div class="acopio-lugar">Plaza O'Leary</div>
+        <div class="acopio-dir">Casco central, El Silencio</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · La Pastora</div>
+        <div class="acopio-lugar">Punto de medio radial</div>
+        <div class="acopio-dir">Parroquia La Pastora, centro de Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Ipostel</div>
+        <div class="acopio-dir">Av. José Ángel Lamas, a pocos metros del Hospital Militar</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Bellas Artes</div>
+        <div class="acopio-lugar">Cruz Roja</div>
+        <div class="acopio-dir">Bellas Artes</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Montalbán</div>
+        <div class="acopio-lugar">Iglesia La Paz</div>
+        <div class="acopio-dir">Montalbán I, Municipio Libertador</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Montalbán</div>
+        <div class="acopio-lugar">Cáritas de Venezuela</div>
+        <div class="acopio-dir">Sede Montalbán</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Montalbán</div>
+        <div class="acopio-lugar">Conferencia Episcopal Venezolana (CEV)</div>
+        <div class="acopio-dir">Av. Teherán, Urb. Montalbán II</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Montalbán</div>
+        <div class="acopio-lugar">Universidad Católica Andrés Bello (UCAB)</div>
+        <div class="acopio-dir">Av. Teherán, Montalbán</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Montalbán</div>
+        <div class="acopio-lugar">Instituto Nacional de Deporte (IND)</div>
+        <div class="acopio-dir">Av. Teherán, Montalbán</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Universidad Central de Venezuela (UCV)</div>
+        <div class="acopio-dir">Plaza del Rectorado, Ciudad Universitaria</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · San Bernardino</div>
+        <div class="acopio-lugar">Iglesia San Bernardino de Siena</div>
+        <div class="acopio-dir">San Bernardino, Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · San Bernardino</div>
+        <div class="acopio-lugar">Centro Cultural y Deportivo Guayana Esequiba</div>
+        <div class="acopio-dir">Parroquia San Bernardino</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Catia</div>
+        <div class="acopio-lugar">Parque Alí Primera</div>
+        <div class="acopio-dir">Av. Sucre, Catia</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Catia</div>
+        <div class="acopio-lugar">Almacenadora Caracas</div>
+        <div class="acopio-dir">Parroquia Sucre (Catia)</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · El Valle</div>
+        <div class="acopio-lugar">CDI Cipriano Yerena</div>
+        <div class="acopio-dir">Av. Intercomunal del Valle, Calle Cajigal</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Escuela Nacional de Fiscales</div>
+        <div class="acopio-dir">Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Liceo Miguel Antonio Caro</div>
+        <div class="acopio-dir">Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Estación de Guardianes de Caracas</div>
+        <div class="acopio-dir">Caño Amarillo</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Protección Civil del Gobierno de Caracas</div>
+        <div class="acopio-dir">Av. Bolívar, Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Estaciones de Bomberos de Caracas</div>
+        <div class="acopio-dir">Todas las estaciones del Cuerpo de Bomberos del Distrito Capital</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Sede del Sistema de Orquestas y Coros</div>
+        <div class="acopio-dir">Quebrada Honda, Bulevar Amador Bendayán</div>
+        <div class="acopio-items">Agua potable, alimentos no perecederos, cobijas, sábanas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Gran Misión Venezuela Joven</div>
+        <div class="acopio-dir">Caracas</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador</div>
+        <div class="acopio-lugar">Rotaract Caracas</div>
+        <div class="acopio-dir">Terrazas del Club Hípico, Caracas</div>
+        <div class="acopio-items">Agua, alimentos no perecederos, medicamentos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Libertador · Catia</div>
+        <div class="acopio-lugar">Intelecto Urbano</div>
+        <div class="acopio-dir">Sector Pérez Bonalde, entre 7ma Av. y Calle Colombia (al lado del Hospital Pediátrico Dr. Elías Toro)</div>
+        <div class="acopio-items">Alimentos, ropa, insumos médicos, artículos de higiene</div>
+      </div>
+    </div>
+
+    <div style="font-size:0.72rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.05em;margin:18px 0 6px;">Otros estados</div>
+    <div class="acopio-list">
+      <div class="acopio-item">
+        <div class="acopio-org">Aragua · Maracay</div>
+        <div class="acopio-lugar">Comando ConVzla — Maracay</div>
+        <div class="acopio-dir">Av. 19 de Abril, C.C. La Capilla, piso 1, local 21</div>
+        <div class="acopio-items">Agua, alimentos, ropa, insumos médicos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Aragua · Maracay</div>
+        <div class="acopio-lugar">Comando ConVzla — Paseo de la Libertad</div>
+        <div class="acopio-dir">Paseo de la Libertad, Av. Las Delicias, frente al Centro Médico de Maracay</div>
+        <div class="acopio-items">Agua, alimentos, ropa, insumos médicos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Carabobo · Valencia</div>
+        <div class="acopio-lugar">Vente Carabobo</div>
+        <div class="acopio-dir">Av. Monseñor Adams, El Viñedo. Edificio Talislandia, mezzanina</div>
+        <div class="acopio-items">Agua, alimentos no perecederos, insumos médicos, ropa</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Carabobo · San Diego</div>
+        <div class="acopio-lugar">Punto industrial San Diego</div>
+        <div class="acopio-dir">Calle La Pedrera, Fundo Los Marines, Lote S/N, Zona Industrial San Diego</div>
+        <div class="acopio-items">Alimentos, agua, abrigos, insumos médicos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="op-card" style="margin-bottom:8px;">
+          <div class="op-name">Banco de Venezuela</div>
+          <div class="op-desc">Urb. El Viñedo, calle Monseñor Adams · av. Carabobo - av. San Félix</div>
+        </div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Lara · Barquisimeto</div>
+        <div class="acopio-lugar">Tatas Food</div>
+        <div class="acopio-dir">Carrera 15 entre calles 13A y 13B, Barquisimeto</div>
+        <div class="acopio-items">Alimentos, agua, higiene</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Lara · Barquisimeto</div>
+        <div class="acopio-lugar">Cáritas Barquisimeto</div>
+        <div class="acopio-dir">Carrera 18, entre calles 34 y 35, Barquisimeto</div>
+        <div class="acopio-items">Todo tipo de insumos humanitarios</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Lara · Barquisimeto</div>
+        <div class="acopio-lugar">Zona Industrial II</div>
+        <div class="acopio-dir">Av. Principal con Calle 6, Locales 110-111-112, Municipio Iribarren</div>
+        <div class="acopio-items">Agua, alimentos, ropa, medicamentos, artículos de higiene</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Bolívar · Ciudad Bolívar</div>
+        <div class="acopio-lugar">Voluntad Popular Monagas</div>
+        <div class="acopio-dir">Esquina de Banesco, Av. República, Municipio Angostura del Orinoco</div>
+        <div class="acopio-items">Agua, alimentos, insumos médicos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Monagas · Maturín</div>
+        <div class="acopio-lugar">Voluntad Popular Monagas</div>
+        <div class="acopio-dir">Calle 6, antigua Bermúdez, casa N.º 11 (antiguo restaurante El Oeste)</div>
+        <div class="acopio-items">Agua, alimentos, insumos médicos</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Táchira</div>
+        <div class="acopio-lugar">ULA Táchira</div>
+        <div class="acopio-dir">Núcleo Táchira, Universidad de Los Andes</div>
+        <div class="acopio-items">Agua potable, alimentos no perecederos, ropa en buen estado</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Zulia · Maracaibo</div>
+        <div class="acopio-lugar">UNT Zulia</div>
+        <div class="acopio-dir">Sede regional de Un Nuevo Tiempo Zulia</div>
+        <div class="acopio-items">Insumos esenciales para damnificados</div>
+      </div>
+      <div class="acopio-item">
+        <div class="acopio-org">Mérida</div>
+        <div class="acopio-lugar">Colegio de Médicos de Mérida</div>
+        <div class="acopio-dir">Sede del Colegio de Médicos, Mérida</div>
+        <div class="acopio-items">Insumos médicos, alimentos, agua</div>
+      </div>
+    </div>
+    <div class="alerta" style="margin-top:12px;">
+      📋 <span><strong>Qué llevar a estos puntos:</strong> agua potable, alimentos no perecederos, medicamentos y kits de primeros auxilios (guantes, gasas, vendas, mascarillas, soluciones), ropa en buen estado, mantas y artículos de higiene personal.</span>
+    </div>
+
+    <div style="font-size:0.85rem;font-weight:700;color(--negro);margin:20px 0 12px;">📋 Qué llevar a los centros de acopio</div>
+    <div class="donar-cols">
+      <div class="donar-col si">
+        <div class="donar-col-title">✓ Sí se necesita</div>
+        <ul>
+          <li>Agua potable embotellada</li>
+          <li>Alimentos no perecederos y enlatados</li>
+          <li>Leche en polvo y alimentos para bebés</li>
+          <li>Pañales para bebé y adulto</li>
+          <li>Medicamentos y botiquines</li>
+          <li>Gasas, vendas, antisépticos, jeringas</li>
+          <li>Artículos de higiene personal</li>
+          <li>Toallas sanitarias</li>
+          <li>Ropa en buen estado (suéteres/abrigos tienen prioridad)</li>
+          <li>Mantas y cobijas</li>
+          <li>Linternas, pilas, cascos</li>
+          <li>Comida para mascotas</li>
+        </ul>
+      </div>
+      <div class="donar-col no">
+        <div class="donar-col-title">✗ No se acepta en esta etapa</div>
+        <ul>
+          <li>Ropa en mal estado o sucia</li>
+          <li>Alimentos perecederos o vencidos</li>
+          <li>Muebles o electrodomésticos grandes</li>
+          <li>Medicamentos vencidos</li>
+          <li>Efectivo a desconocidos o cuentas no verificadas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="alerta">
+      ⚠️ <span>En algunas zonas las autoridades han impedido la distribución de ayuda ciudadana. Si tu punto de acopio enfrenta presión oficial, repórtalo a medios independientes y organizaciones de derechos humanos.</span>
+    </div>
+  </div>
+
+  <!-- VOLUNTARIOS -->
+  <div id="voluntarios" class="section">
+    <div class="section-header">
+      <div class="section-icon">🤝</div>
+      <div>
+        <div class="section-title">Voluntarios y apoyo especializado</div>
+        <div class="section-desc">Si tienes habilidades técnicas, médicas o psicológicas, aquí puedes sumarte</div>
+      </div>
+    </div>
+    <div class="card-grid">
+      <a href="https://encuentralos.tecnosoft.dev" target="_blank" rel="noopener" class="card acc-purple">
+        <div class="card-name">Regístrate como voluntario</div>
+        <div class="card-url">encuentralos.tecnosoft.dev</div>
+        <div class="card-desc">Ofrece tu ayuda o registra un centro que busca voluntarios. Sin registro previo. También coordina logística de transporte.</div>
+        <div class="card-tag">Acción directa</div>
+      </a>
+      <a href="https://directorio-sismo.netlify.app" target="_blank" rel="noopener" class="card acc-purple">
+        <div class="card-name">Ingenieros y arquitectos</div>
+        <div class="card-url">directorio-sismo.netlify.app</div>
+        <div class="card-desc">Evaluación gratuita de daños estructurales basada en fotos. No sustituye inspección oficial, pero orienta si el edificio es habitable.</div>
+        <div class="card-tag">Técnico</div>
+      </a>
+      <a href="https://www.redsolidariavenezuela.com" target="_blank" rel="noopener" class="card acc-purple">
+        <div class="card-name">Apoyo psicológico gratuito</div>
+        <div class="card-url">redsolidariavenezuela.com</div>
+        <div class="card-desc">Primeros auxilios psicológicos online por WhatsApp para venezolanos afectados. Buscar ayuda es parte de la recuperación.</div>
+        <div class="card-tag">Salud mental</div>
+      </a>
+      <a href="https://directorio-sismo.netlify.app" target="_blank" rel="noopener" class="card acc-purple">
+        <div class="card-name">Impresión 3D — Yesos</div>
+        <div class="card-url">directorio-sismo.netlify.app</div>
+        <div class="card-desc">¿Tienes impresora 3D? Descarga el archivo para imprimir yesos ortopédicos para víctimas con fracturas.</div>
+        <div class="card-tag">Innovación</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CONECTIVIDAD -->
+  <div id="conectividad" class="section">
+    <div class="section-header">
+      <div class="section-icon">📡</div>
+      <div>
+        <div class="section-title">Conectividad y comunicaciones</div>
+        <div class="section-desc">Servicios gratuitos activados automáticamente por las operadoras durante la emergencia</div>
+      </div>
+    </div>
+    <div class="operadoras-grid">
+      <div class="op-card">
+        <div class="op-name">Movistar Venezuela</div>
+        <div class="op-desc">Llamadas nacionales gratuitas para todos los clientes en zonas afectadas. Aplica automáticamente.</div>
+        <div class="op-badge">Automático</div>
+      </div>
+      <div class="op-card">
+        <div class="op-name">Digitel</div>
+        <div class="op-desc">Llamadas gratuitas en Caracas, La Guaira, Morón, Valencia, San Diego, Maracay, San Felipe y Barquisimeto.</div>
+        <div class="op-badge">Automático</div>
+      </div>
+      <div class="op-card">
+        <div class="op-name">Movilnet</div>
+        <div class="op-desc">Liberó servicios de comunicación en todo el territorio nacional para garantizar el derecho a comunicarse.</div>
+        <div class="op-badge">Automático</div>
+      </div>
+      <div class="op-card">
+        <div class="op-name">CANTV</div>
+        <div class="op-desc">Telefonía e internet liberados. Cuentas canceladas pueden reactivarse sin costo. Equipos dañados: solicitar reemplazo.</div>
+        <div class="op-badge">Automático</div>
+      </div>
+      <div class="op-card">
+        <div class="op-name">Starlink</div>
+        <div class="op-desc">SMS vía satélite activos en zonas sin cobertura terrestre. Funciona mejor con vista despejada al cielo.</div>
+        <div class="op-badge">Automático · LTE</div>
+      </div>
+      <div class="op-card">
+        <div class="op-name">Orange / Movistar España</div>
+        <div class="op-desc">Llamadas y mensajes gratuitos entre España y Venezuela durante la emergencia. Sin configuración.</div>
+        <div class="op-badge">España ↔ Venezuela</div>
+      </div>
+    </div>
+    <div class="alerta" style="margin-top:16px;">
+      💡 <span><strong>Consejo:</strong> Si no tienes señal, busca una zona alta y despejada. WhatsApp funciona con señal débil — un mensaje de texto o nota de voz sale aunque la llamada no conecte. Activa modo avión cuando no uses el teléfono para ahorrar batería.</span>
+    </div>
+    <div class="alerta" style="margin-top:8px;">
+      📞 <span><strong>Para llamar a Venezuela desde el exterior</strong> sin que el receptor necesite datos: <strong>BOSS Revolution</strong> o <strong>RingVoz</strong>. También Skype to Phone o Viber Out.</span>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>🇻🇪 Creado por venezolanos para venezolanos · Junio 2026</p>
+  <p style="margin-top:6px;">Información compilada de fuentes públicas y verificadas. Las cifras son aproximadas y se actualizan constantemente.</p>
+  <p style="margin-top:6px;color:#666;">Para datos oficiales: Protección Civil · FUNVISIS · Ministerio de Salud</p>
+</footer>
+
+</body>
+</html>
